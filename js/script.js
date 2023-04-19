@@ -5,7 +5,7 @@ const optArticleSelector = '.post',
   optTitleListSelector = '.titles',
   optArticleTagSelector = '.post-tags .list',
   optArticleAuthorSelector = '.post .post-author',
-  optTagsListSelector = '.tags .list',
+  optTagsListSelector = '.list.tags',
   titleList = document.querySelector(optTitleListSelector),
   articleTagsList = document.querySelector(optArticleTagSelector);
 
@@ -39,7 +39,6 @@ function titleClickHandler(event) {
   targetArticle.classList.add('active');
 }
 
-
 function generateTitleLinks(customSelector = '') {
   const articles = document.querySelectorAll(optArticleSelector + customSelector);
   /* remove contents of titleList */
@@ -70,6 +69,7 @@ function generateTitleLinks(customSelector = '') {
 }
 
 generateTitleLinks();
+
 
 function generateTags() {
   /* [NEW] create a new variable allTags with an empty array */
@@ -104,7 +104,6 @@ function generateTags() {
     }
   }
   /* [NEW] find list of tags in right column */
-
   const tagList = document.querySelector(optTagsListSelector);
   /* [NEW] add html from allTags to tagList */
   tagList.innerHTML = allTags.join(' ');
@@ -144,7 +143,7 @@ function tagClickHandler(event) { // Nie działa. Nie wiem jak to zrobić.
 
 function addClickListenersToTags() {
   /* find all links to tags */
-  const tagLinks = document.querySelectorAll('.post-tags a');
+  const tagLinks = document.querySelectorAll('a');
   /* START LOOP: for each link */
   for (let tagLink of tagLinks) {
     /* add tagClickHandler as event listener for that link */
@@ -154,6 +153,7 @@ function addClickListenersToTags() {
 }
 
 addClickListenersToTags();
+
 
 function generateAuthors() {
   /* find all articles */
@@ -181,7 +181,6 @@ function authorClickHandler(event) {
   event.preventDefault();
   const clickedElement = this;
   const author = clickedElement.querySelector('a').getAttribute('href');
-  console.log("acta: ", author);
   generateTitleLinks('[data-author="' + author + '"]');
 
 }
