@@ -103,14 +103,9 @@ body {
 /* Post */
 
 .post {
-
-  position: absolute;
-  opacity: 0;
-  transition: all 1s;
-  z-index: 0;
+  display: none;
   &.active {
-    opacity: 1;
-    z-index: 1;
+    display: block;
   }
 }
 
@@ -123,4 +118,26 @@ body {
   p {
     margin: 0 10px 0 0;
   }
+}
+
+/* tag cloud sizes */
+
+.tag-size-5 {
+  font-size: xx-large;
+}
+
+.tag-size-4 {
+  font-size: x-large;
+}
+
+.tag-size-3 {
+  font-size: large;
+}
+
+.tag-size-2 {
+  font-size: medium;
+}
+
+.tag-size-1 {
+  font-size: small;
 }
