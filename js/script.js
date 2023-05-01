@@ -73,8 +73,8 @@ function generateTitleLinks(customSelector = '') {
 
 generateTitleLinks();
 
-function calculateTagsParams (tags) {
-  const params = {max: 0, min: 999999};
+function calculateTagsParams(tags) {
+  const params = { max: 0, min: 999999 };
   for (let tag in tags) {
     console.log(tag + ' is used ' + tags[tag] + ' times');
     if (tags[tag] > params.max) {
@@ -87,8 +87,8 @@ function calculateTagsParams (tags) {
   return params;
 }
 
-function calculateTagClass (count, params) {
-  const classNumber = Math.floor( ( (count - params.min) / (params.max - params.min) ) * (optCloudClassCount - 1) + 1 );
+function calculateTagClass(count, params) {
+  const classNumber = Math.floor(((count - params.min) / (params.max - params.min)) * (optCloudClassCount - 1) + 1);
   return optCloudClassPrefix + classNumber;
 }
 
@@ -132,7 +132,7 @@ function generateTags() {
   const tagsParams = calculateTagsParams(allTags);
   console.log('tagsParams:', tagsParams);
   for (let tag in allTags) {
-    allTagsHTML += '<li><a href="#tag-' + tag + '" class="' + calculateTagClass (allTags[tag], tagsParams) +'"><span>' + tag + ' ('+ allTags[tag] + ')' + '</span></a></li>';
+    allTagsHTML += '<a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '"><span>' + tag + '</span></a> ';
   }
   tagList.innerHTML = allTagsHTML;
 }
@@ -184,7 +184,7 @@ addClickListenersToTags();
 
 
 function generateAuthors() {
-  let allAuthors = [];
+  let allAuthors = {};
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
   /* START LOOP: for every article: */
@@ -197,18 +197,23 @@ function generateAuthors() {
     const articleAuthor = article.getAttribute("data-author");
     /* create author link */
     html = '<a href="#author-' + articleAuthor + '"><span>' + articleAuthor + '</span></a>';
-    let authorListLink = '<li>' + html + '</li>';
-    console.log(authorListLink);
     /* insert HTML to authorWrapper */
     authorWrapper.innerHTML = html;
     /* END LOOP: for every article */
-    if(allAuthors.indexOf(authorListLink) == -1) {
-      allAuthors.push(authorListLink);
+    if (!allAuthors.hasOwnProperty(articleAuthor)) {
+      allAuthors[articleAuthor] = 1;
+    }
+    else {
+      allAuthors[articleAuthor]++;
     }
   }
 
   const authorList = document.querySelector(optAuthorListSelector);
-  authorList.innerHTML = allAuthors;
+  let html = '';
+  for (let author in allAuthors) {
+    html += '<li><a href="#author-' + author + '">' + author + ' (' + allAuthors[author] + ')</a></li>';
+  }
+  authorList.innerHTML = html;
 
 }
 
